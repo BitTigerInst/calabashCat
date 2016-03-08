@@ -24,8 +24,8 @@ public class BusinessListActivity extends BaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);	//For both ActionBarSherlock and AppCompat library, it's necessary to call requestFeature() before super.onCreate()
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		DataBindingUtil.setContentView(this, R.layout.user_list_activity);
 	}

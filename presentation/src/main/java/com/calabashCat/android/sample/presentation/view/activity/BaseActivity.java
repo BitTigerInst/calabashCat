@@ -6,14 +6,17 @@ import android.app.FragmentTransaction;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.calabashCat.android.sample.presentation.AndroidApplication;
+import com.calabashCat.android.sample.presentation.R;
 import com.calabashCat.android.sample.presentation.viewmodel.ViewModel;
 
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends Activity {
+public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends AppCompatActivity {
 
   private VM viewModel;
   private B binding;
@@ -21,6 +24,9 @@ public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBindi
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+    setSupportActionBar(myToolbar);
   }
 
   @Override

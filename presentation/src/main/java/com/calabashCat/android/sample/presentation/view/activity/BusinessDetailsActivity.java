@@ -33,8 +33,8 @@ public class BusinessDetailsActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		super.onCreate(savedInstanceState);
 		DataBindingUtil.setContentView(this, R.layout.activity_user_details);
 
 		this.initializeActivity(savedInstanceState);
