@@ -25,7 +25,7 @@ public class BusinessListActivity extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+//		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		DataBindingUtil.setContentView(this, R.layout.user_list_activity);
 	}

@@ -66,7 +66,7 @@ public class CloudUserDataStore implements UserDataStore {
 
 		// general params
 		params.put("term", "food");
-		params.put("limit", "7");
+		params.put("limit", "20");
 
 		// locale params
 		params.put("lang", "fr");

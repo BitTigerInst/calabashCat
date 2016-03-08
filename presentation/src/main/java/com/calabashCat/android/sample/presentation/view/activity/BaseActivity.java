@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 
 import com.calabashCat.android.sample.presentation.AndroidApplication;
 import com.calabashCat.android.sample.presentation.viewmodel.ViewModel;
@@ -13,7 +14,7 @@ import com.calabashCat.android.sample.presentation.viewmodel.ViewModel;
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends Activity {
+public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBinding> extends AppCompatActivity {
 
   private VM viewModel;
   private B binding;

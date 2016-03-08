@@ -32,10 +32,6 @@
             app:column_count_landscape="2" />
 
         <include
-            layout="@layout/material_big_image_card_layout"
-            />
-
-        <include
             layout="@layout/view_progress"
             bind:viewModel="@{viewModel}" />
 

@@ -176,6 +176,13 @@ public class CardProvider<T extends CardProvider> extends Observable {
         return (T) this;
     }
 
+    @NonNull
+    @SuppressWarnings("unchecked")
+    public T setBackgroundColorNotNotify(@ColorInt final int color) {
+        mBackgroundColor = color;
+        return (T) this;
+    }
+
     /**
      * Set the background color withProvider an resource color (e.g. {@code
      * android.R.color.white}).
