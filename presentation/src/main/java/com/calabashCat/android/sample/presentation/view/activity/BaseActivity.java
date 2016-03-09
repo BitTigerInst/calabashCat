@@ -24,9 +24,6 @@ public abstract class BaseActivity<VM extends ViewModel, B extends ViewDataBindi
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-    setSupportActionBar(myToolbar);
   }
 
   @Override
