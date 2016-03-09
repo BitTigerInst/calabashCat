@@ -140,16 +140,13 @@ public class UserCardViewModel extends LoadingViewModel {
 		};
 	}
 
-	public BusinessesAdapter.OnItemClickListener onUserItemClick() {
-		return new BusinessesAdapter.OnItemClickListener() {
-			@Override
-			public void onUserItemClicked(Business userModel) {
-				Intent intent = BusinessDetailsActivity.getCallingIntent(AndroidApplication.getInstance()
-						.getCurrentActivity(), userModel.getReview_count());
-				ActivityNavigator.navigateTo(BusinessDetailsActivity.class, intent);
-			}
-		};
+
+	public void onUserItemClicked(Business business) {
+		Intent intent = BusinessDetailsActivity.getCallingIntent(AndroidApplication.getInstance()
+				.getCurrentActivity(), business.getReview_count());
+		ActivityNavigator.navigateTo(BusinessDetailsActivity.class, intent);
 	}
+
 
 	private void fillArray(Collection<Business> collection) {
 		List<Card> cards = new ArrayList<>();
@@ -160,7 +157,7 @@ public class UserCardViewModel extends LoadingViewModel {
 		mListView.getAdapter().addAll(cards);
 	}
 
-	private Card getCard(Business business, int position) {
+	private Card getCard(final Business business, int position) {
 		String title = business.getName();
 		String description = business.getPhone();
 
@@ -221,8 +218,7 @@ public class UserCardViewModel extends LoadingViewModel {
 						.setListener(new OnActionClickListener() {
 							@Override
 							public void onActionClicked(View view, Card card) {
-								Toast.makeText(context, "You have pressed the right button on card " + card.getProvider().getTitle(), Toast.LENGTH_SHORT).show();
-								card.dismiss();
+								onUserItemClicked(business);
 							}
 						}));
 
