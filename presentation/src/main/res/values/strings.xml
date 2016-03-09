@@ -23,4 +23,5 @@
   //ToolBar
   <string name="action_search">search</string>
   <string name="setting">setting</string>
+  <string name="user_list_activity_title">Food List</string>
 </resources>

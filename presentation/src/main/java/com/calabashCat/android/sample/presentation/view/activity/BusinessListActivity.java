@@ -58,6 +58,8 @@ public class BusinessListActivity extends BaseActivity{
 			}
 		});
 		setSupportActionBar(myToolbar);
+        //Change ActionBar tile
+        getSupportActionBar().setTitle(R.string.user_list_activity_title);
 	}
 
 	//Show the overflow menu on the Action Bar
