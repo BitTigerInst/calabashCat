@@ -47,4 +47,8 @@ public class GetUserList extends UseCase {
 	public Observable buildUseCaseObservable() {
 		return this.userRepository.getSearchResponse();
 	}
+
+	public Observable buildUseCaseObservable(String name) {
+		return this.userRepository.getSearchResponse(name, null);
+	}
 }

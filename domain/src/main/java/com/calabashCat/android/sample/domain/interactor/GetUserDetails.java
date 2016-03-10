@@ -62,4 +62,9 @@ public class GetUserDetails extends UseCase {
 	protected Observable buildUseCaseObservable() {
 		return this.userRepository.user(this.userId);
 	}
+
+	@Override
+	protected Observable buildUseCaseObservable(String string) {
+		return null;
+	}
 }

@@ -127,7 +127,7 @@ public class UserCardViewModel extends LoadingViewModel {
 				showRetry();
 			}
 
-		});
+		}, "los anglees");
 	}
 
 	@Override

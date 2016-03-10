@@ -55,6 +55,8 @@ public abstract class UseCase {
 	 */
 	protected abstract Observable buildUseCaseObservable();
 
+	protected abstract Observable buildUseCaseObservable(String string);
+
 	/**
 	 * Executes the current use case.
 	 *
@@ -63,6 +65,14 @@ public abstract class UseCase {
 	@SuppressWarnings("unchecked")
 	public void execute(Subscriber UseCaseSubscriber) {
 		this.subscription = this.buildUseCaseObservable()
+				.subscribeOn(Schedulers.from(threadExecutor))
+				.observeOn(postExecutionThread.getScheduler())
+				.subscribe(UseCaseSubscriber);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void execute(Subscriber UseCaseSubscriber, Entry ...) {
+		this.subscription = this.buildUseCaseObservable(entry)
 				.subscribeOn(Schedulers.from(threadExecutor))
 				.observeOn(postExecutionThread.getScheduler())
 				.subscribe(UseCaseSubscriber);
