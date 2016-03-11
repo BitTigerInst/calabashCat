@@ -67,6 +67,6 @@ public class GetUserDetails extends UseCase {
 
 	@Override
 	protected Observable buildUseCaseObservable( Map.Entry<Object, Map<String,String>> quert) {
-		return null;
+		throw new NullPointerException("not implement yet");
 	}
 }

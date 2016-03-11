@@ -49,7 +49,7 @@ public class UserDataRepository implements UserRepository {
 
 	@Override
 	public Observable<User> user(int userId) {
-		return null;
+		throw new NullPointerException("not implement yet");
 	}
 
 	@Override

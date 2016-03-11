@@ -96,6 +96,6 @@ public class CloudUserDataStore implements UserDataStore {
 	public Observable<Business> getBusiness(final int userId) {
 //		return this.restApi.userEntityById(userId)
 //				.doOnNext(saveToCacheAction);
-		return null;
+		throw new NullPointerException("not implement yet");
 	}
 }
