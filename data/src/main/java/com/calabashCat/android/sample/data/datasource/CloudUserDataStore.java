@@ -66,7 +66,7 @@ public class CloudUserDataStore implements UserDataStore {
 
 		// general params
 		params.put("term", "food");
-		params.put("limit", "20");
+		params.put("limit", "10");
 
 		// locale params
 		params.put("lang", "fr");
@@ -81,9 +81,14 @@ public class CloudUserDataStore implements UserDataStore {
 	}
 
 	@Override
-	public Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params) {
-		Observable<SearchResponse> response = restApi.search(location, params);
-		return response;
+	public Observable<SearchResponse> getSearchResponse( Map.Entry<Object, Map<String,String>> query) {
+
+		if (query.getKey() instanceof String) {
+			Observable<SearchResponse> response = restApi.search(query.getKey().toString(), query.getValue());
+			return response;
+		}
+
+		throw new IllegalArgumentException("query format not match");
 	}
 
 

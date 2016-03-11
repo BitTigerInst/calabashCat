@@ -34,12 +34,12 @@ public interface UserRepository {
 	 */
 	Observable<SearchResponse> getSearchResponse();
 
-	Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params);
-
 	/**
 	 * Get an {@link Observable} which will emit a {@link User}.
 	 *
 	 * @param userId The user id used to retrieve user data.
 	 */
 	Observable<User> user(final int userId);
+
+	Observable getSearchResponse(Map.Entry<Object, Map<String, String>> query);
 }

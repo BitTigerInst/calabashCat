@@ -19,8 +19,11 @@ import com.calabashCat.android.sample.presentation.navigation.ActivityNavigator;
 import com.calabashCat.android.sample.presentation.view.activity.BusinessDetailsActivity;
 import com.calabashCat.android.sample.presentation.view.adapter.BusinessesAdapter;
 
+import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by rocko on 15-11-5.
@@ -67,6 +70,19 @@ public class UserListViewModel extends LoadingViewModel {
 			return;
 		}
 		showLoading();
+
+		// hard code to test run API search
+		Map<String, String> params = new HashMap<>();
+
+		// general params
+		params.put("term", "food");
+		params.put("limit", "20");
+		// locale params
+		params.put("lang", "fr");
+		Map.Entry<Object, Map<String,String>> query =
+				new AbstractMap.SimpleEntry<Object, Map<String,String>>("los angeles",params);
+
+
 		getUserList.execute(new DefaultSubscriber<SearchResponse>() {
 			@Override
 			public void onNext(SearchResponse searchResponse) {
@@ -88,7 +104,7 @@ public class UserListViewModel extends LoadingViewModel {
 				showRetry();
 			}
 
-		});
+		}, query);
 	}
 
 	@Override
