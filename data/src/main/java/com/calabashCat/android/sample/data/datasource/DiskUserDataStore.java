@@ -45,7 +45,9 @@ public class DiskUserDataStore implements UserDataStore {
   }
 
   @Override
-  public Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params) { return null; }
+  public Observable<SearchResponse> getSearchResponse(Map.Entry<Object, Map<String, String>> query) {
+    return null;
+  }
 
   @Override
   public Observable<Business> getBusiness(int userId) {

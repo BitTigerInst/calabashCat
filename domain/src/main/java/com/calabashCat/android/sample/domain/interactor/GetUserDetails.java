@@ -22,6 +22,8 @@ import com.calabashCat.android.sample.data.dto.User;
 import com.calabashCat.android.sample.domain.interactor.repository.UserDataRepository;
 import com.calabashCat.android.sample.domain.interactor.repository.UserRepository;
 
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -64,7 +66,7 @@ public class GetUserDetails extends UseCase {
 	}
 
 	@Override
-	protected Observable buildUseCaseObservable(String string) {
+	protected Observable buildUseCaseObservable( Map.Entry<Object, Map<String,String>> quert) {
 		return null;
 	}
 }

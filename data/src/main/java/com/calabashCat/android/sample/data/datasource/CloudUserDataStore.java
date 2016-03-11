@@ -81,9 +81,14 @@ public class CloudUserDataStore implements UserDataStore {
 	}
 
 	@Override
-	public Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params) {
-		Observable<SearchResponse> response = restApi.search(location, params);
-		return response;
+	public Observable<SearchResponse> getSearchResponse( Map.Entry<Object, Map<String,String>> query) {
+
+		if (query.getKey() instanceof String) {
+			Observable<SearchResponse> response = restApi.search(query.getKey().toString(), query.getValue());
+			return response;
+		}
+
+		throw new IllegalArgumentException("query format not match");
 	}
 
 

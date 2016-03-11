@@ -32,7 +32,7 @@ public interface UserDataStore {
    */
   Observable<SearchResponse> getSearchResponse();
 
-  Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params);
+  Observable<SearchResponse> getSearchResponse(Map.Entry<Object, Map<String,String>> query);
 
   /**
    * Get an {@link rx.Observable} which will emit a {@link Business} by its id.

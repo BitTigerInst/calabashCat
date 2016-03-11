@@ -20,6 +20,8 @@ import com.calabashCat.android.sample.data.executor.PostExecutionThread;
 import com.calabashCat.android.sample.data.executor.ThreadExecutor;
 import com.calabashCat.android.sample.data.executor.UIThread;
 
+import java.util.Map;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -55,7 +57,7 @@ public abstract class UseCase {
 	 */
 	protected abstract Observable buildUseCaseObservable();
 
-	protected abstract Observable buildUseCaseObservable(String string);
+	protected abstract Observable buildUseCaseObservable( Map.Entry<Object, Map<String,String>> query);
 
 	/**
 	 * Executes the current use case.
@@ -71,8 +73,8 @@ public abstract class UseCase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void execute(Subscriber UseCaseSubscriber, Entry ...) {
-		this.subscription = this.buildUseCaseObservable(entry)
+	public void execute(Subscriber UseCaseSubscriber, Map.Entry<Object, Map<String,String>> query) {
+		this.subscription = this.buildUseCaseObservable(query)
 				.subscribeOn(Schedulers.from(threadExecutor))
 				.observeOn(postExecutionThread.getScheduler())
 				.subscribe(UseCaseSubscriber);

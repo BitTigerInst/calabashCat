@@ -37,9 +37,12 @@ import com.dexafree.materialList.view.MaterialListView;
 import com.squareup.picasso.RequestCreator;
 
 import java.lang.ref.WeakReference;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
@@ -106,6 +109,17 @@ public class UserCardViewModel extends LoadingViewModel {
 			return;
 		}
 		showLoading();
+
+		// hard code to test run API search
+		Map<String, String> params = new HashMap<>();
+
+		// general params
+		params.put("term", "food");
+		params.put("limit", "20");
+		// locale params
+		params.put("lang", "fr");
+		Map.Entry<Object, Map<String,String>> query =
+				new AbstractMap.SimpleEntry<Object, Map<String,String>>("los angeles",params);
 		getUserList.execute(new DefaultSubscriber<SearchResponse>() {
 			@Override
 			public void onNext(SearchResponse searchResponse) {
@@ -127,7 +141,7 @@ public class UserCardViewModel extends LoadingViewModel {
 				showRetry();
 			}
 
-		}, "los anglees");
+		}, query);
 	}
 
 	@Override

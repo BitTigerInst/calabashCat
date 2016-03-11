@@ -48,14 +48,14 @@ public class UserDataRepository implements UserRepository {
 	}
 
 	@Override
-	public Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params) {
-		final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
-		Observable<SearchResponse> searchResponse = userDataStore.getSearchResponse(location, params);
-		return searchResponse;
+	public Observable<User> user(int userId) {
+		return null;
 	}
 
 	@Override
-	public Observable<User> user(int userId) {
-		return null;
+	public Observable getSearchResponse(Map.Entry<Object, Map<String, String>> query) {
+		final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
+		Observable<SearchResponse> searchResponse = userDataStore.getSearchResponse(query);
+		return searchResponse;
 	}
 }
