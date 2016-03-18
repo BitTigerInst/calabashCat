@@ -68,11 +68,8 @@ android {
 dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
   def presentationTestDependencies = rootProject.ext.presentationTestDependencies
-
   compile project(':domain')
-
   compile project(':materialList')
-
   compile presentationDependencies.recyclerView
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
@@ -87,11 +84,10 @@ dependencies {
   androidTestCompile presentationTestDependencies.espresso
   androidTestCompile presentationTestDependencies.espressoIntent
   androidTestCompile presentationTestDependencies.espressoContrib
-
-//  androidTestCompile presentationTestDependencies.testingSupportLib
+  //  androidTestCompile presentationTestDependencies.testingSupportLib
   androidTestCompile presentationTestDependencies.runner
   androidTestCompile presentationTestDependencies.rules
   androidTestCompile presentationTestDependencies.androidAnnotations
-
   compile 'jp.wasabeef:recyclerview-animators:2.0.0'
+  compile project(':sideMenu')
 }

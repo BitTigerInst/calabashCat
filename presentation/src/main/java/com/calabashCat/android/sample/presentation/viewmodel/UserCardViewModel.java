@@ -37,9 +37,12 @@ import com.dexafree.materialList.view.MaterialListView;
 import com.squareup.picasso.RequestCreator;
 
 import java.lang.ref.WeakReference;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
@@ -106,6 +109,17 @@ public class UserCardViewModel extends LoadingViewModel {
 			return;
 		}
 		showLoading();
+
+		// hard code to test run API search
+		Map<String, String> params = new HashMap<>();
+
+		// general params
+		params.put("term", "food");
+		params.put("limit", "20");
+		// locale params
+		params.put("lang", "fr");
+		Map.Entry<Object, Map<String,String>> query =
+				new AbstractMap.SimpleEntry<Object, Map<String,String>>("los angeles",params);
 		getUserList.execute(new DefaultSubscriber<SearchResponse>() {
 			@Override
 			public void onNext(SearchResponse searchResponse) {
@@ -127,7 +141,7 @@ public class UserCardViewModel extends LoadingViewModel {
 				showRetry();
 			}
 
-		});
+		}, query);
 	}
 
 	@Override
@@ -140,93 +154,92 @@ public class UserCardViewModel extends LoadingViewModel {
 		};
 	}
 
-	public BusinessesAdapter.OnItemClickListener onUserItemClick() {
-		return new BusinessesAdapter.OnItemClickListener() {
-			@Override
-			public void onUserItemClicked(Business userModel) {
-				Intent intent = BusinessDetailsActivity.getCallingIntent(AndroidApplication.getInstance()
-						.getCurrentActivity(), userModel.getReview_count());
-				ActivityNavigator.navigateTo(BusinessDetailsActivity.class, intent);
-			}
-		};
+
+	public void onUserItemClicked(Business business) {
+		Intent intent = BusinessDetailsActivity.getCallingIntent(AndroidApplication.getInstance()
+				.getCurrentActivity(), business.getReview_count());
+		ActivityNavigator.navigateTo(BusinessDetailsActivity.class, intent);
 	}
+
 
 	private void fillArray(Collection<Business> collection) {
 		List<Card> cards = new ArrayList<>();
+		int i = 0;
 		for (Business business : collection) {
-			cards.add(getCard(business));
+			cards.add(getCard(business, i++));
 		}
 		mListView.getAdapter().addAll(cards);
 	}
 
-	private Card getCard(Business business) {
+	private Card getCard(final Business business, int position) {
 		String title = business.getName();
 		String description = business.getPhone();
 
 		final Activity context = mContext.get().getActivity();
 
-		return new Card.Builder(context)
-				.setTag("SMALL_IMAGE_CARD")
-				.setDismissible()
-				.withProvider(new CardProvider())
-				.setLayout(R.layout.material_small_image_card)
-				.setTitle(title)
-				.setDescription(description)
-				.setDrawable(business.getImage_url())
-		        .setBackgroundColor(Color.BLACK)
-				.setDrawableConfiguration(new CardProvider.OnImageConfigListener() {
-					@Override
-					public void onImageConfigure(@NonNull final RequestCreator requestCreator) {
-						requestCreator
-								.resize(350, 350)
-								.centerCrop();
-					}
-				})
-				.endConfig()
-				.build();
-
-//		final CardProvider provider = new Card.Builder(context)
-//				.setTag("BASIC_IMAGE_BUTTON_CARD")
+//		return new Card.Builder(context)
+//				.setTag("SMALL_IMAGE_CARD")
 //				.setDismissible()
-//				.withProvider(new CardProvider<>())
-//				.setLayout(R.layout.material_basic_image_buttons_card_layout)
+//				.withProvider(new CardProvider())
+//				.setLayout(R.layout.material_small_image_card)
 //				.setTitle(title)
-//				.setTitleGravity(Gravity.END)
 //				.setDescription(description)
-//				.setDescriptionGravity(Gravity.END)
 //				.setDrawable(business.getImage_url())
+//		        .setBackgroundColor(Color.BLACK)
 //				.setDrawableConfiguration(new CardProvider.OnImageConfigListener() {
 //					@Override
-//					public void onImageConfigure(@NonNull RequestCreator requestCreator) {
-//						requestCreator.fit();
+//					public void onImageConfigure(@NonNull final RequestCreator requestCreator) {
+//						requestCreator
+//								.resize(350, 350)
+//								.centerCrop();
 //					}
 //				})
-//				.addAction(R.id.left_text_button, new TextViewAction(context)
-//						.setText("left")
-//						.setTextResourceColor(R.color.black_button)
-//						.setListener(new OnActionClickListener() {
-//							@Override
-//							public void onActionClicked(View view, Card card) {
-//								Toast.makeText(context, "You have pressed the left button", Toast.LENGTH_SHORT).show();
-//								card.getProvider().setTitle("CHANGED ON RUNTIME");
-//							}
-//						}))
-//				.addAction(R.id.right_text_button, new TextViewAction(context)
-//						.setText("right")
-//						.setTextResourceColor(R.color.orange_button)
-//						.setListener(new OnActionClickListener() {
-//							@Override
-//							public void onActionClicked(View view, Card card) {
-//								Toast.makeText(context, "You have pressed the right button on card " + card.getProvider().getTitle(), Toast.LENGTH_SHORT).show();
-//								card.dismiss();
-//							}
-//						}));
+//				.endConfig()
+//				.build();
 
-//		if (position % 2 == 0) {
-//			provider.setDividerVisible(true);
-//		}
+		final CardProvider provider = new Card.Builder(context)
+				.setTag("BASIC_IMAGE_BUTTON_CARD")
+				.setDismissible()
+				.withProvider(new CardProvider<>())
+				.setLayout(R.layout.material_basic_image_buttons_card_layout)
+				.setTitle(title)
+				.setTitleGravity(Gravity.END)
+				.setDescription(description)
+				.setDescriptionGravity(Gravity.END)
+				.setDrawable(business.getImage_url())
+				.setDrawableConfiguration(new CardProvider.OnImageConfigListener() {
+					@Override
+					public void onImageConfigure(@NonNull RequestCreator requestCreator) {
+//						requestCreator.fit();
+					}
+				})
+				.addAction(R.id.left_text_button, new TextViewAction(context)
+						.setText("left")
+						.setTextResourceColor(R.color.black_button)
+						.setListener(new OnActionClickListener() {
+							@Override
+							public void onActionClicked(View view, Card card) {
+								Toast.makeText(context, "You have pressed the left button", Toast.LENGTH_SHORT).show();
 
-		//return provider.endConfig().build();
+								mListView.getAdapter().addLike(card);
+								card.getProvider().setBackgroundColorNotNotify(Color.RED);
+								card.dismiss();
+							}
+						}))
+				.addAction(R.id.right_text_button, new TextViewAction(context)
+						.setText("right")
+						.setTextResourceColor(R.color.orange_button)
+						.setListener(new OnActionClickListener() {
+							@Override
+							public void onActionClicked(View view, Card card) {
+								onUserItemClicked(business);
+							}
+						}));
+
+			provider.setDividerVisible(true);
+
+
+		return provider.endConfig().build();
 
 //		return new Card.Builder(mContext.get().getActivity())
 //				.setTag("BIG_IMAGE_CARD")

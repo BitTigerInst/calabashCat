@@ -21,6 +21,8 @@ import android.content.Context;
 import com.calabashCat.android.sample.domain.interactor.repository.UserDataRepository;
 import com.calabashCat.android.sample.domain.interactor.repository.UserRepository;
 
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -46,5 +48,9 @@ public class GetUserList extends UseCase {
 	@Override
 	public Observable buildUseCaseObservable() {
 		return this.userRepository.getSearchResponse();
+	}
+
+	public Observable buildUseCaseObservable( Map.Entry<Object, Map<String,String>> query) {
+		return this.userRepository.getSearchResponse(query);
 	}
 }

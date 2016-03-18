@@ -23,6 +23,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
     private final MaterialListView.OnSwipeAnimation mSwipeAnimation;
     private final MaterialListView.OnAdapterItemsChanged mItemAnimation;
     private final List<Card> mCardList = new ArrayList<>();
+    private final List<Card> mlikeCardList = new ArrayList<>();
 
     public MaterialListAdapter(@NonNull final MaterialListView.OnSwipeAnimation swipeAnimation,
                                @NonNull final MaterialListView.OnAdapterItemsChanged itemAnimation) {
@@ -228,4 +229,26 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
             notifyDataSetChanged();
         }
     }
+
+    public void moveToStart(@NonNull final Card card) {
+        //remove(card, true);
+        mCardList.remove(card);
+        add(0, card, false);
+    }
+
+    public void insertAllAtStart(List<Card> cards) {
+        for (int index = 0; index < cards.size(); index ++) {
+            add(0, cards.get(index), false);
+        }
+    }
+
+    public void addLike(Card card) {
+        mlikeCardList.add(card);
+    }
+
+    public void addAllLikeCard() {
+        insertAllAtStart(mlikeCardList);
+        mlikeCardList.clear();
+    }
+
 }

@@ -41,14 +41,16 @@ public class DiskUserDataStore implements UserDataStore {
 
   @Override
   public Observable<SearchResponse> getSearchResponse() {
-    return null;
+    throw new NullPointerException("not implement yet");
   }
 
   @Override
-  public Observable<SearchResponse> getSearchResponse(String location, Map<String,String> params) { return null; }
+  public Observable<SearchResponse> getSearchResponse(Map.Entry<Object, Map<String, String>> query) {
+    throw new NullPointerException("not implement yet");
+  }
 
   @Override
   public Observable<Business> getBusiness(int userId) {
-    return null;
+    throw new NullPointerException("not implement yet");
   }
 }

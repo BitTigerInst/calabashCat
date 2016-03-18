@@ -8,7 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 
 import com.dexafree.materialList.R;
 import com.dexafree.materialList.card.Card;
@@ -24,6 +26,7 @@ public class MaterialListView extends RecyclerView {
 
     private OnDismissCallback mDismissCallback;
     private SwipeDismissRecyclerViewTouchListener mDismissListener;
+    private OnScrollListener mScrollListener;
     private View mEmptyView;
     private int mColumnCount;
     private int mColumnCountLandscape = DEFAULT_COLUMNS_LANDSCAPE;
@@ -68,8 +71,29 @@ public class MaterialListView extends RecyclerView {
                         }
                     }
                 });
+
+        mScrollListener = new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (listIsAtTop()) {
+                    Log.d("here", "i am top");
+                }
+
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (listIsAtTop()) {
+                    Log.d("here2", "i am top");
+                    getAdapter().addAllLikeCard();
+                }
+            }
+        };
+
         setOnTouchListener(mDismissListener);
-        setOnScrollListener(mDismissListener.makeScrollListener());
+        setOnScrollListener(mScrollListener);
 
         setAdapter(new MaterialListAdapter(new OnSwipeAnimation() {
             @Override
@@ -118,6 +142,11 @@ public class MaterialListView extends RecyclerView {
 
             typedArray.recycle();
         }
+    }
+
+    private boolean listIsAtTop()   {
+        if(this.getChildCount() == 0) return true;
+        return this.getChildAt(0).getTop() == 0;
     }
 
     public <T extends MaterialListAdapter> void setAdapter(@NonNull final T adapter) {
